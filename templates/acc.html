@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script> <!-- Connect to your script.js -->
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 h-screen">
+    <div class="flex h-full">
+        <!-- Sidebar -->
+        <div class="w-16 bg-white flex flex-col items-center py-4 space-y-8">
+            <a href="/dash"><div class="fas fa-chart-bar text-gray-500"></div></a>
+            <a href="/ai"><div class="fas fa-exclamation-triangle text-gray-500"></div></a>
+            <a href="https://workspace.google.com/business/" target="_blank"><i class="fas fa-calendar-alt text-gray-500"></i></a>
+                    <a href="https://workspace.google.com/intl/en_in/business/" target="_blank"><i class="fas fa-pen text-gray-500"></i></a>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Top Bar -->
+            <div class="flex items-center mb-8">
+                <div class="relative w-full">
+                    <input type="text" class="w-full py-2 px-4 rounded-full border border-gray-300" placeholder="Search...">
+                    <i class="fas fa-search absolute top-2 right-4 text-gray-400"></i>
+                </div>
+                <div class="flex items-center space-x-4 ml-4">
+                    <a href="calendar.google.com"><i class="fas fa-calendar-alt text-gray-500"></i></a>
+                    <a href="keep.google.com"></a><i class="fas fa-pen text-gray-500"></i></a>
+                </div>
+            </div>
+            <!-- Account Logged-In Content -->
+            <div class="flex justify-center items-center h-full">
+                <div class="bg-white p-8 rounded-lg shadow-lg w-1/3 text-center" style="margin-top: -20px;"> <!-- Moved upwards slightly -->
+                    <i class="fas fa-user-circle text-gray-500 text-6xl mb-4"></i>
+                    <h2 class="text-gray-600 mb-2">Account Logged In</h2>
+                    <p class="text-gray-500 text-xl mb-4">Welcome to, <span class="font-bold">Prometheus Cloud Infra</span>!</p>
+                    <p class="text-gray-500 mb-8">Account created on: <span class="font-semibold">October 18, 2024</span></p> <!-- Added space below -->
+                    <a href="/"><button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Log Out</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

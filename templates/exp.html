@@ -1,0 +1,73 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 h-screen">
+    <div class="flex h-full">
+        <!-- Sidebar -->
+        <div class="w-16 bg-white flex flex-col items-center py-4 space-y-8">
+            <a href="/dash"><div class="fas fa-chart-bar text-gray-500"></div></a>
+            <a href="/ai"><div class="fas fa-exclamation-triangle text-gray-500"></div></a>
+            <a href="/exp"><div class="fas fa-compass text-gray-500"></div></a>
+            <a href="/acc"><i class="fas fa-user-circle text-gray-500 mt-auto"></i></a>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Top Bar -->
+            <div class="flex items-center mb-8">
+                <div class="relative w-full">
+                    <input type="text" class="w-full py-2 px-4 rounded-full border border-gray-300" placeholder="Search...">
+                    <i class="fas fa-search absolute top-2 right-4 text-gray-400"></i>
+                </div>
+                <div class="flex items-center space-x-4 ml-4">
+                    <a href="https://workspace.google.com/business/" target="_blank"><i class="fas fa-calendar-alt text-gray-500"></i></a>
+                    <a href="https://workspace.google.com/intl/en_in/business/" target="_blank"><i class="fas fa-pen text-gray-500"></i></a>
+                </div>
+            </div>
+            <!-- Explore Content -->
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Cybersecurity Articles Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Cybersecurity Articles</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Understanding Zero Trust Security</h3>
+                            <a href="https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/#:~:text=Zero%20Trust%20security%20is%20an,outside%20of%20the%20network%20perimeter." target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">How to Protect Your Cloud Infrastructure</h3>
+                            <a href="https://www.ekransystem.com/en/blog/cloud-infrastructure-security" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Top Cyber Threats in 2024</h3>
+                            <a href="https://umbrella.cisco.com/info/cyber-threat-trends-report?utm_medium=search-paid&utm_source=google&utm_campaign=UMB_APJC_IN_EN_GS_Nonbrand_Threats_T1&utm_content=DNS-FY24-Q4-Content-Ebook-Cyber-Threat-Trends-Report&_bt=712231207891&_bk=cybersecurity%20threats&_bm=p&_bn=g&_bg=161647957321&gad_source=1&gclid=CjwKCAjw68K4BhAuEiwAylp3ks3L1Ax9IgSrABxoVk2jaeIbd4MaoqMnjlkujLanZzZY-NZEMtVJrBoC1M4QAvD_BwE" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tools & Resources Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Tools & Resources</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Best Open-Source Security Tools</h3>
+                            <a href="https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Guide to Penetration Testing</h3>
+                            <a href="https://www.bluevoyant.com/knowledge-center/penetration-testing-complete-guide-to-process-types-and-tools" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Latest News Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Latest News</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Ransomware Attacks Surge Worldwide</h3>
+                            <a href="https://go.veeam.com/ransomware-trends-executive-summary-2024-apj?st=adwordspaidsearch&utm_source=google&utm_medium=cpc&utm_campaign=01P-BRS-PMIX_APJ_EN_SAARC_Paid-Search_WP_Ransomware-Trends-2024_1AW&utm_content=cid|21376058331_ntw|g_adgr|166437899751_creative|702505242604_ext|_adposition|_locph|9302026_dev|c_devm|_placement|_gclid|CjwKCAjw68K4BhAuEiwAylp3kvU4xpc-XGKyP4yy_zYekC2i_CH5Kl8JtjfGgiyM93j2CJO7bDMA-RoCVN0QAvD_BwE_keyword|ransomware%20activity_matchtype|p_trgt|_exten|_trgid|kwd-1199251272422_geoloc|_ifmob|_ifpc|[PC_Tablet]_gsn|[GSearchN]_gdn|&gad_source=1&gclid=CjwKCAjw68K4BhAuEiwAylp3kvU4xpc-XGKyP4yy_zYekC2i_CH5Kl8JtjfGgiyM93j2CJO7bDMA-RoCVN0QAvD_BwE" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Data Breaches in Major Companies</h3>
+                            <a href="https://www.csoonline.com/article/534628/the-biggest-data-breaches-of-the-21st-century.html" target="_blank" class="text-blue-500 underline">Read More</a>
+                        </div>

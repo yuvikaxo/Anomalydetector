@@ -1,0 +1,91 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 h-screen">
+    <div class="flex h-full">
+        <!-- Sidebar -->
+        <div class="w-16 bg-white flex flex-col items-center py-4 space-y-8">
+            <a href="/dash"><div class="fas fa-chart-bar text-gray-500"></div>
+            <a href="/ai"><div class="fas fa-exclamation-triangle text-gray-500"></div></a>
+            <a href="/exp"><div class="fas fa-compass text-gray-500"></div></a>
+            <a href="/acc"><i class="fas fa-user-circle text-gray-500 mt-auto"></i></a>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Top Bar -->
+            <div class="flex items-center mb-8">
+                <div class="relative w-full">
+                    <input type="text" class="w-full py-2 px-4 rounded-full border border-gray-300" placeholder="Search...">
+                    <i class="fas fa-search absolute top-2 right-4 text-gray-400"></i>
+                </div>
+                <div class="flex items-center space-x-4 ml-4">
+                    <a href="https://workspace.google.com/business/" target="_blank"><i class="fas fa-calendar-alt text-gray-500"></i></a>
+                    <a href="https://workspace.google.com/intl/en_in/business/" target="_blank"><i class="fas fa-pen text-gray-500"></i></a>
+                </div>
+            </div>
+            <!-- Alerts Content -->
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Alerts Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Current Alerts</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Critical Errors</h3>
+                            <p class="text-red-500 text-2xl">5</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Warnings</h3>
+                            <p class="text-yellow-500 text-2xl">12</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Resolved Issues</h3>
+                            <p class="text-green-500 text-2xl">20</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Pending Actions</h3>
+                            <p class="text-orange-500 text-2xl">8</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- History Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Alert History</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Last 24 Hours</h3>
+                            <p class="text-blue-500 text-xl">15 Alerts</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Last 7 Days</h3>
+                            <p class="text-blue-500 text-xl">50 Alerts</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Notifications Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Notifications</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">New Alerts</h3>
+                            <p class="text-purple-500 text-xl">3 Unread</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Total Notifications</h3>
+                            <p class="text-purple-500 text-xl">25</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button Section -->
+            <div class="flex justify-center mt-12">
+                <button onclick="location.href='/graph'" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600">
+                    Perform Real-Time Check
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
