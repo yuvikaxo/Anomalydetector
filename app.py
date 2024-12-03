@@ -201,7 +201,7 @@ def graph():
     df = prepare_data()
     df = detect_anomalies(df)
     generate_plots(df)
-    check_and_alert_anomalies(df, "rishikasingh0005@gmail.com")
+    check_and_alert_anomalies(df, "gyuvika91@gmail.com")
     return render_template('graph.html')
 
 @app.route('/dash')
