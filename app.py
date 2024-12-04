@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')
 
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, request, redirect, url_for
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,6 +20,9 @@ app = Flask(__name__)
 
 # Set Seaborn style for better visuals
 sns.set(style="whitegrid")
+
+# Global variable to store user's email
+user_email = None
 
 # Define the path to the static/images directory
 images_dir = "static/images"
@@ -107,17 +110,40 @@ def generate_plots(df):
     plt.savefig(os.path.join(images_dir, "network_traffic.png"))
     plt.close()
 
-# Email Alert Functionality
-def send_email_alert(subject, body, recipient_email):
-    sender_email = "yuvika.hay@gmail.com"
-    sender_password = "kjfi dtro tlda vrcm"
+@app.route('/set_email', methods=['POST'])
+def set_email():
+    global user_email
+    user_email = request.form['email']  # Get email from form
+    print(f"Email saved: {user_email}")  # Log the email (for debugging)
+    return redirect(url_for('ai'))  # Redirect back to the main page after saving email
 
-    # Set up the email message
+# Email Alert Functionality
+from email.mime.base import MIMEBase
+from email import encoders
+import io
+
+def send_email_alert(subject, body, recipient_email, df):
+    sender_email = "yuvika.hay@gmail.com"  # Replace with your email
+    sender_password = "jbwe ozel qgmc ojsx"  # Replace with your password
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = recipient_email
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
+
+    # Convert the anomalies DataFrame to CSV in memory
+    csv_output = io.StringIO()
+    df.to_csv(csv_output, index=False)
+    csv_output.seek(0)
+
+    # Create a MIMEBase object to attach the CSV file
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(csv_output.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', 'attachment', filename='anomalies.csv')
+
+    # Attach the file to the email
+    msg.attach(part)
 
     try:
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
@@ -128,51 +154,22 @@ def send_email_alert(subject, body, recipient_email):
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-# Email with CSV Attachment
-def send_email_with_csv(subject, body, recipient_email, csv_path):
-    sender_email = "yuvika.hay@gmail.com"
-    sender_password = "kjfi dtro tlda vrcm"
 
-    # Set up the email message
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = recipient_email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+# Check and alert anomalies (use the user_email variable for recipient)
+def check_and_alert_anomalies(df, metric, anomaly_column):
+    global user_email
+    if not user_email:
+        print("No email set. Cannot send alerts.")
+        return
 
-    # Attach the CSV file
-    try:
-        with open(csv_path, "rb") as file:
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload(file.read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(csv_path)}')
-        msg.attach(part)
-
-        # Send the email
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, recipient_email, msg.as_string())
-        print(f"Alert with CSV sent to {recipient_email}")
-    except Exception as e:
-        print(f"Failed to send email with CSV: {e}")
-
-# Check and alert anomalies
-def check_and_alert_anomalies(df, recipient_email):
-    anomalies = pd.DataFrame()
-    for metric in ['cpu_usage', 'memory_usage', 'network_traffic']:
-        metric_anomalies = df[df[f"{metric.split('_')[0]}_anomaly"] == 1]
-        if not metric_anomalies.empty:
-            anomalies = pd.concat([anomalies, metric_anomalies], ignore_index=True)
-
+    anomalies = df[df[anomaly_column] == 1]
     if not anomalies.empty:
-        # Save anomalies to a CSV file
-        csv_path = "static/Anomalies.csv"
-        anomalies.to_csv(csv_path, index=False)
+        # Collect anomalies into one CSV
+        subject = f"Anomalies Detected in {metric}!"
+        body = f"Anomalies have been detected in {metric}. Please see the attached file for details."
 
-        # Send email with CSV attachment
-        send_email_with_csv("Anomaly Report: Cloud Infrastructure Monitoring", "As part of our commitment to providing seamless monitoring of your cloud infrastructure, we have detected potential anomalies in the system. Please find attached the detailed anomaly report in CSV format for your review. This report highlights irregularities in key metrics, including CPU usage, memory usage, and network traffic, that may require immediate attention.", recipient_email, csv_path)
+        # Send a single email with the CSV file containing all anomalies
+        send_email_alert(subject, body, user_email, anomalies)
 
 # Flask route
 @app.route('/')
@@ -196,13 +193,14 @@ def ai():
 def exp():
     return render_template('exp.html')
 
+# The /graph route to generate plots and check anomalies
 @app.route('/graph')
 def graph():
-    df = prepare_data()
-    df = detect_anomalies(df)
-    generate_plots(df)
-    check_and_alert_anomalies(df, "gyuvika91@gmail.com")
-    return render_template('graph.html')
+    df = prepare_data()  # Prepare sample data
+    df = detect_anomalies(df)  # Detect anomalies
+    generate_plots(df)  # Generate plots
+    check_and_alert_anomalies(df, "cpu_usage", "cpu_anomaly")  # Check anomalies and send email alerts
+    return render_template('graph.html')  # Render the page showing results
 
 @app.route('/dash')
 def login():
@@ -213,5 +211,4 @@ def acc():
     return render_template('acc.html')
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)

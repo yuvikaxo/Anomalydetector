@@ -49,3 +49,39 @@ document.addEventListener('DOMContentLoaded', () => {
         loadDashCharts();
     }
 });
+
+
+document.getElementById('saveEmailButton').addEventListener('click', function() {
+    const email = document.getElementById('emailInput').value;
+
+    // Check if email is valid
+    if (email) {
+        // Show "Saved!" message
+        const savedMessage = document.getElementById('savedMessage');
+        savedMessage.classList.remove('hidden');
+        
+        // Hide the message after 2 seconds
+        setTimeout(() => {
+            savedMessage.classList.add('hidden');
+        }, 2000);
+
+        // Send email to backend using fetch
+        fetch('/save-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: email }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Email saved:', data);
+        })
+        .catch(error => {
+            console.error('Error saving email:', error);
+        });
+    } else {
+        alert('Please enter a valid email.');
+    }
+});
+
