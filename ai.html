@@ -1,0 +1,176 @@
+<html>
+<head>
+    <title>Alerts Page - yuriCloud</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Custom styles for the search results dropdown */
+        #searchResults {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            display: none;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        .dropdown-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-green-100 to-blue-100 h-screen">
+    <div class="flex h-full">
+        <!-- Sidebar -->
+        <div class="w-16 bg-white flex flex-col items-center py-4 space-y-8">
+            <a href="/dash"><div class="fas fa-chart-bar text-gray-500"></div></a>
+            <a href="/ai"><div class="fas fa-exclamation-triangle text-gray-500"></div></a>
+            <a href="/exp"><div class="fas fa-compass text-gray-500"></div></a>
+            <a href="/acc"><i class="fas fa-user-circle text-gray-500 mt-auto"></i></a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Search Bar -->
+            <div class="flex items-center mb-8">
+                <div class="relative w-full">
+                    <input type="text" class="w-full py-2 px-4 rounded-full border border-gray-300" id="searchBar" placeholder="Search..." oninput="showResults()" autocomplete="off">
+                    <div id="searchResults" class="dropdown"></div>
+                    <i class="fas fa-search absolute top-3 right-4 text-gray-400"></i>
+                </div>
+                <div class="flex items-center space-x-4 ml-4">
+                    <a href="https://workspace.google.com/intl/en-US/products/calendar/" target="_blank"><i class="fas fa-calendar-alt text-gray-500"></i></a>
+                    <a href="https://www.google.co.in/keep/" target="_blank"><i class="fas fa-pen text-gray-500"></i></a>
+                </div>
+            </div>
+
+            <!-- Alerts Content -->
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Current Alerts Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Current Alerts</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Critical Errors</h3>
+                            <p class="text-red-500 text-2xl">5</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Warnings</h3>
+                            <p class="text-yellow-500 text-2xl">12</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Resolved Issues</h3>
+                            <p class="text-green-500 text-2xl">20</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Pending Actions</h3>
+                            <p class="text-orange-500 text-2xl">8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert History Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Alert History</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Average for 24 Hours</h3>
+                            <p class="text-blue-500 text-xl">15 Alerts</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Average for 7 Days</h3>
+                            <p class="text-blue-500 text-xl">50 Alerts</p>
+                        </div>
+                    </div>
+                    <!-- Email Input for Report -->
+                    <div class="flex justify-center mt-6">
+                        <form action="{{ url_for('set_email') }}" method="POST">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                <label for="emailInput" class="block text-gray-600 mb-2 text-center">Enter the host e-mail to receive full report of Real-Time Anomaly Check:</label>
+                                <div class="flex items-center">
+                                    <input type="email" id="emailInput" name="email" class="w-full py-2 px-4 rounded-lg border border-gray-300 shadow-sm" placeholder="Enter your email" required>
+                                    <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">
+                                        Save
+                                    </button>
+                                </div>
+                                <p id="savedMessage" class="text-green-500 mt-2 text-center hidden">Saved!</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Notifications Section -->
+                <div>
+                    <h2 class="text-gray-600 mb-4">Notifications</h2>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Last Alerts</h3>
+                            <p class="text-purple-500 text-xl">3 Unread</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow h-32">
+                            <h3 class="text-gray-600">Total Notifications</h3>
+                            <p class="text-purple-500 text-xl">25</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button Section -->
+            <div class="flex justify-center mt-12">
+                <button onclick="location.href='/graph'" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-600">
+                    Perform Real-Time Check
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { name: "Dashboard", url: "/dash" },
+            { name: "Explore Page", url: "/exp" },
+            { name: "Alerts Page", url: "/ai" },
+            { name: "My Account", url: "/acc" },
+            { name: "Perform Real-Time Check", url: "/ai" },
+            { name: "Traffic Anomalies", url: "/dash" },
+            { name: "Service Downtime", url: "/dash" },
+            { name: "Log Out", url: "/acc" },
+            { name: "Sales", url: "/dash" },
+            { name: "Users", url: "/dash" }
+        ];
+
+        function showResults() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            if (query.trim() === '') {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            const filteredResults = data.filter(item => item.name.toLowerCase().includes(query));
+            if (filteredResults.length > 0) {
+                resultsContainer.style.display = 'block';
+                filteredResults.forEach(result => {
+                    const link = document.createElement('a');
+                    link.href = result.url;
+                    link.textContent = result.name;
+                    link.classList.add('dropdown-item');
+                    resultsContainer.appendChild(link);
+                });
+            } else {
+                resultsContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
